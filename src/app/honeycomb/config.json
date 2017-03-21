@@ -1,0 +1,39 @@
+{
+  "general": {
+    "serviceProviderNameSpace": "HCGalleries"
+  },
+  "formData": {
+    "galleries": "interactivesolutions\\honeycombgalleries\\app\\forms\\HCGalleriesForm"
+  },
+  "adminMenu": [
+    {
+      "path": "admin\/galleries",
+      "translation": "HCGalleries::galleries.page_title",
+      "icon": "fa-object-group",
+      "aclPermission": "interactivesolutions_honeycomb_galleries_galleries_list"
+    }
+  ],
+  "acl": {
+    "permissions": [
+      {
+        "name": "admin.galleries",
+        "controller": "interactivesolutions\\honeycombgalleries\\app\\http\\controllers\\HCGalleriesController",
+        "actions": [
+          "interactivesolutions_honeycomb_galleries_galleries_list",
+          "interactivesolutions_honeycomb_galleries_galleries_create",
+          "interactivesolutions_honeycomb_galleries_galleries_update",
+          "interactivesolutions_honeycomb_galleries_galleries_delete",
+          "interactivesolutions_honeycomb_galleries_galleries_force_delete"
+        ]
+      }
+    ],
+    "rolesActions": {
+      "project-admin": [
+        "interactivesolutions_honeycomb_galleries_galleries_list",
+        "interactivesolutions_honeycomb_galleries_galleries_create",
+        "interactivesolutions_honeycomb_galleries_galleries_update",
+        "interactivesolutions_honeycomb_galleries_galleries_delete"
+      ]
+    }
+  }
+}
