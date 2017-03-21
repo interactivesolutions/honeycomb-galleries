@@ -3,6 +3,7 @@
 namespace interactivesolutions\honeycombgalleries\app\models;
 
 use interactivesolutions\honeycombcore\models\HCMultiLanguageModel;
+use interactivesolutions\honeycombresources\app\models\HCResources;
 
 class Galleries extends HCMultiLanguageModel
 {
@@ -19,5 +20,15 @@ class Galleries extends HCMultiLanguageModel
      * @var array
      */
     protected $fillable = ['id', 'publish_at', 'expires_at'];
+
+    /**
+     * List of city parts assigned to the streets
+     *
+     * @return mixed
+     */
+    public function images()
+    {
+        return $this->belongsToMany(HCResources::class, GalleriesResourcesConnections::getTableName(), 'gallery_id', 'resource_id');
+    }
 
 }
