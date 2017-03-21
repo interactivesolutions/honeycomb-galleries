@@ -93,6 +93,7 @@ class HCGalleriesController extends HCBaseController
 
         $record = Galleries::create(array_get($data, 'record'));
         $record->updateTranslations(array_get($data, 'translations'));
+        $record->images()->sync(array_get($data, 'images'));
 
         return $this->getSingleRecord($record->id);
     }
@@ -111,6 +112,8 @@ class HCGalleriesController extends HCBaseController
 
         $record->update(array_get($data, 'record'));
         $record->updateTranslations(array_get($data, 'translations'));
+        $record->images()->sync(array_get($data, 'images'));
+
 
         return $this->getSingleRecord($record->id);
     }
@@ -227,6 +230,7 @@ class HCGalleriesController extends HCBaseController
         array_set($data, 'record.expires_at', array_get($_data, 'expires_at'));
 
         array_set($data, 'translations', array_get($_data, 'translations'));
+        array_set($data, 'images', array_get($_data, 'images'));
 
         foreach ($data['translations'] as &$value)
             $value['slug'] = generateHCSlug(GalleriesTranslations::getTableName() . '_' . $value['language_code'], $value['title']);
@@ -242,7 +246,7 @@ class HCGalleriesController extends HCBaseController
      */
     public function getSingleRecord(string $id)
     {
-        $with = ['translations'];
+        $with = ['translations', 'images'];
 
         $select = Galleries::getFillableFields();
 
