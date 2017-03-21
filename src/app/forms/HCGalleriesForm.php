@@ -76,6 +76,16 @@ class HCGalleriesForm
                     "required"        => 0,
                     "requiredVisible" => 0,
                 ],
+                [
+                    "type"            => "resource",
+                    "fieldID"         => "images",
+                    "tabID"           => trans("Resources"),
+                    "uploadURL"       => route("admin.api.resources"),
+                    "viewURL"         => route("resource.get", ['/']),
+                    "sortable"        => 1,
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                ],
             ],
         ];
 
@@ -86,16 +96,15 @@ class HCGalleriesForm
             return $form;
 
         //Make changes to edit form if needed
-        $form['structure'][] = [
+        $form['structure'][] =
             [
-                "type"            => "singleLine",
-                "fieldID"         => "slug",
-                "label"           => trans("HCGalleries::galleries.slug"),
-                "required"        => 1,
-                "requiredVisible" => 1,
-                "multiLanguage"   => 1,
-            ],
-        ];
+                "type"          => "singleLine",
+                "fieldID"       => "slug",
+                "tabID"         => trans("Translations"),
+                "label"         => trans("HCGalleries::galleries.slug"),
+                "readonly"      => 1,
+                "multiLanguage" => 1,
+            ];
 
         return $form;
     }
