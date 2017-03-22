@@ -230,7 +230,7 @@ class HCGalleriesController extends HCBaseController
         array_set($data, 'record.expires_at', array_get($_data, 'expires_at'));
 
         array_set($data, 'translations', array_get($_data, 'translations'));
-        array_set($data, 'images', array_get($_data, 'images'));
+        array_set($data, 'images', array_get($_data, 'images', []));
 
         foreach ($data['translations'] as &$value)
             $value['slug'] = generateHCSlug(GalleriesTranslations::getTableName() . '_' . $value['language_code'], $value['title']);
