@@ -3,10 +3,12 @@
 //honeycomb-galleries/src/app/routes/admin/routes.galleries.php
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth']], function ()
+{
     Route::get('galleries', ['as' => 'admin.galleries', 'middleware' => ['acl:interactivesolutions_honeycomb_galleries_galleries_list'], 'uses' => 'HCGalleriesController@adminView']);
 
-    Route::group(['prefix' => 'api/galleries'], function () {
+    Route::group(['prefix' => 'api/galleries'], function ()
+    {
         Route::get('/', ['as' => 'admin.api.galleries', 'middleware' => ['acl:interactivesolutions_honeycomb_galleries_galleries_list'], 'uses' => 'HCGalleriesController@listPage']);
         Route::get('list', ['as' => 'admin.api.galleries.list', 'middleware' => ['acl:interactivesolutions_honeycomb_galleries_galleries_list'], 'uses' => 'HCGalleriesController@list']);
         Route::get('list/{timestamp}', ['as' => 'admin.api.galleries.list.update', 'middleware' => ['acl:interactivesolutions_honeycomb_galleries_galleries_list'], 'uses' => 'HCGalleriesController@listUpdate']);
@@ -32,8 +34,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth']], function ()
 //honeycomb-galleries/src/app/routes/api/routes.galleries.php
 
 
-Route::group(['prefix' => 'api', 'middleware' => ['web', 'auth-apps']], function () {
-    Route::group(['prefix' => 'v1/galleries'], function () {
+Route::group(['prefix' => 'api', 'middleware' => ['web', 'auth-apps']], function ()
+{
+    Route::group(['prefix' => 'v1/galleries'], function ()
+    {
         Route::get('/', ['as' => 'api.v1.galleries', 'middleware' => ['acl-apps:api_v1_interactivesolutions_honeycomb_galleries_galleries_list'], 'uses' => 'HCGalleriesController@listPage']);
         Route::get('list', ['as' => 'api.v1.galleries.list', 'middleware' => ['acl-apps:api_v1_interactivesolutions_honeycomb_galleries_galleries_list'], 'uses' => 'HCGalleriesController@list']);
         Route::get('list/{timestamp}', ['as' => 'api.v1.galleries.list.update', 'middleware' => ['acl:interactivesolutions_honeycomb_galleries_galleries_list'], 'uses' => 'HCGalleriesController@listUpdate']);
