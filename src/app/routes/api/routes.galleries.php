@@ -1,12 +1,12 @@
 <?php
 
-Route::group(['prefix' => 'api', 'middleware' => ['web', 'auth-apps']], function ()
+Route::group(['prefix' => 'api', 'middleware' => ['auth-apps']], function ()
 {
     Route::group(['prefix' => 'v1/galleries'], function ()
     {
         Route::get('/', ['as' => 'api.v1.galleries', 'middleware' => ['acl-apps:api_v1_interactivesolutions_honeycomb_galleries_galleries_list'], 'uses' => 'HCGalleriesController@listPage']);
         Route::get('list', ['as' => 'api.v1.galleries.list', 'middleware' => ['acl-apps:api_v1_interactivesolutions_honeycomb_galleries_galleries_list'], 'uses' => 'HCGalleriesController@list']);
-        Route::get('list/{timestamp}', ['as' => 'api.v1.galleries.list.update', 'middleware' => ['acl:interactivesolutions_honeycomb_galleries_galleries_list'], 'uses' => 'HCGalleriesController@listUpdate']);
+        Route::get('list/{timestamp}', ['as' => 'api.v1.galleries.list.update', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_galleries_galleries_list'], 'uses' => 'HCGalleriesController@listUpdate']);
         Route::get('search', ['as' => 'api.v1.galleries.search', 'middleware' => ['acl-apps:api_v1_interactivesolutions_honeycomb_galleries_galleries_list'], 'uses' => 'HCGalleriesController@listSearch']);
         Route::get('{id}', ['as' => 'api.v1.galleries.single', 'middleware' => ['acl-apps:api_v1_interactivesolutions_honeycomb_galleries_galleries_list'], 'uses' => 'HCGalleriesController@getSingleRecord']);
 
