@@ -17,7 +17,7 @@ class HCGalleriesController extends HCBaseController
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function adminView()
+    public function adminIndex()
     {
         $config = [
             'title'       => trans('HCGalleries::galleries.page_title'),
@@ -28,15 +28,15 @@ class HCGalleriesController extends HCBaseController
             'headers'     => $this->getAdminListHeader(),
         ];
 
-        if ($this->user()->can('interactivesolutions_honeycomb_galleries_galleries_create'))
+        if (auth()->user()->can('interactivesolutions_honeycomb_galleries_galleries_create'))
             $config['actions'][] = 'new';
 
-        if ($this->user()->can('interactivesolutions_honeycomb_galleries_galleries_update')) {
+        if (auth()->user()->can('interactivesolutions_honeycomb_galleries_galleries_update')) {
             $config['actions'][] = 'update';
             $config['actions'][] = 'restore';
         }
 
-        if ($this->user()->can('interactivesolutions_honeycomb_galleries_galleries_delete'))
+        if (auth()->user()->can('interactivesolutions_honeycomb_galleries_galleries_delete'))
             $config['actions'][] = 'delete';
 
         $config['actions'][] = 'search';
@@ -86,7 +86,7 @@ class HCGalleriesController extends HCBaseController
      * @param array|null $data
      * @return mixed
      */
-    protected function __create(array $data = null)
+    protected function __apiStore(array $data = null)
     {
         if (is_null($data))
             $data = $this->getInputData();
@@ -95,7 +95,7 @@ class HCGalleriesController extends HCBaseController
         $record->updateTranslations(array_get($data, 'translations'));
         $record->images()->sync(array_get($data, 'images'));
 
-        return $this->getSingleRecord($record->id);
+        return $this->apiShow($record->id);
     }
 
     /**
@@ -104,7 +104,7 @@ class HCGalleriesController extends HCBaseController
      * @param $id
      * @return mixed
      */
-    protected function __update(string $id)
+    protected function __apiUpdate(string $id)
     {
         $record = Galleries::findOrFail($id);
 
@@ -115,7 +115,7 @@ class HCGalleriesController extends HCBaseController
         $record->images()->sync(array_get($data, 'images'));
 
 
-        return $this->getSingleRecord($record->id);
+        return $this->apiShow($record->id);
     }
 
     /**
@@ -124,11 +124,11 @@ class HCGalleriesController extends HCBaseController
      * @param string $id
      * @return mixed
      */
-    protected function __updateStrict(string $id)
+    protected function __apiUpdateStrict(string $id)
     {
         Galleries::where('id', $id)->update(request()->all());
 
-        return $this->getSingleRecord($id);
+        return $this->apiShow($id);
     }
 
     /**
@@ -137,7 +137,7 @@ class HCGalleriesController extends HCBaseController
      * @param $list
      * @return mixed|void
      */
-    protected function __delete(array $list)
+    protected function __apiDestroy(array $list)
     {
         Galleries::destroy($list);
     }
@@ -148,7 +148,7 @@ class HCGalleriesController extends HCBaseController
      * @param $list
      * @return mixed|void
      */
-    protected function __forceDelete(array $list)
+    protected function __apiForceDelete(array $list)
     {
         Galleries::onlyTrashed()->whereIn('id', $list)->forceDelete();
     }
@@ -159,7 +159,7 @@ class HCGalleriesController extends HCBaseController
      * @param $list
      * @return mixed|void
      */
-    protected function __restore(array $list)
+    protected function __apiRestore(array $list)
     {
         Galleries::whereIn('id', $list)->restore();
     }
@@ -170,7 +170,7 @@ class HCGalleriesController extends HCBaseController
      * @param array $select
      * @return mixed
      */
-    public function createQuery(array $select = null)
+    protected function createQuery(array $select = null)
     {
         $with = ['translations'];
 
@@ -187,7 +187,7 @@ class HCGalleriesController extends HCBaseController
         $list = $this->checkForDeleted($list);
 
         // add search items
-        $list = $this->listSearch($list);
+        $list = $this->search($list);
 
         // ordering data
         $list = $this->orderData($list, $select);
@@ -244,7 +244,7 @@ class HCGalleriesController extends HCBaseController
      * @param $id
      * @return mixed
      */
-    public function getSingleRecord(string $id)
+    public function apiShow(string $id)
     {
         $with = ['translations', 'images'];
 
