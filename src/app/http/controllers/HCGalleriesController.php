@@ -197,21 +197,16 @@ class HCGalleriesController extends HCBaseController
 
     /**
      * List search elements
-     * @param $list
-     * @return mixed
+     * @param Builder $query
+     * @param string $phrase
+     * @return Builder
      */
-    protected function listSearch(Builder $list)
+    protected function searchQuery(Builder $query, string $phrase)
     {
-        if (request()->has('q')) {
-            $parameter = request()->input('q');
-
-            $list = $list->where(function ($query) use ($parameter) {
-                $query->where('publish_at', 'LIKE', '%' . $parameter . '%')
-                    ->orWhere('expires_at', 'LIKE', '%' . $parameter . '%');
+        return $query->where (function (Builder $query) use ($phrase) {
+                $query->where('publish_at', 'LIKE', '%' . $phrase . '%')
+                    ->orWhere('expires_at', 'LIKE', '%' . $phrase . '%');
             });
-        }
-
-        return $list;
     }
 
     /**
