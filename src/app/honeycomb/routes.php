@@ -3,7 +3,7 @@
 //honeycomb-galleries/src/app/routes/admin/01_routes.galleries.php
 
 
-Route::group(['prefix' => env('HC_ADMIN_URL'), 'middleware' => ['web', 'auth']], function ()
+Route::group(['prefix' => config('hc.admin_url'), 'middleware' => ['web', 'auth']], function ()
 {
     Route::get('galleries', ['as' => 'admin.galleries', 'middleware' => ['acl:interactivesolutions_honeycomb_galleries_galleries_list'], 'uses' => 'HCGalleriesController@adminIndex']);
 
