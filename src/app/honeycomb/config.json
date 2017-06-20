@@ -7,7 +7,6 @@
   },
   "adminMenu": [
     {
-      "path": "admin\/galleries",
       "route": "admin.galleries.index",
       "translation": "HCGalleries::galleries.page_title",
       "icon": "fa-object-group",
