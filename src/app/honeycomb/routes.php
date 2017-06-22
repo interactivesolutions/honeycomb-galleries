@@ -1,6 +1,6 @@
 <?php
 
-//honeycomb-galleries/src/app/routes/admin/01_routes.galleries.php
+//src/app/routes//admin/01_routes.galleries.php
 
 
 Route::group(['prefix' => config('hc.admin_url'), 'middleware' => ['web', 'auth']], function ()
@@ -32,7 +32,7 @@ Route::group(['prefix' => config('hc.admin_url'), 'middleware' => ['web', 'auth'
 });
 
 
-//honeycomb-galleries/src/app/routes/api/01_routes.galleries.php
+//src/app/routes//api/01_routes.galleries.php
 
 
 Route::group(['prefix' => 'api', 'middleware' => ['auth-apps']], function ()
