@@ -135,33 +135,39 @@ class HCGalleriesController extends HCBaseController
      * Delete records table
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiDestroy(array $list)
     {
         Galleries::destroy($list);
+
+        return hcSuccess();
     }
 
     /**
      * Delete records table
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiForceDelete(array $list)
     {
         Galleries::onlyTrashed()->whereIn('id', $list)->forceDelete();
+
+        return hcSuccess();
     }
 
     /**
      * Restore multiple records
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiRestore(array $list)
     {
         Galleries::whereIn('id', $list)->restore();
+
+        return hcSuccess();
     }
 
     /**
