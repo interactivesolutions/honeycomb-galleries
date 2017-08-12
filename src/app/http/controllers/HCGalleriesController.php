@@ -236,7 +236,7 @@ class HCGalleriesController extends HCBaseController
         foreach ($data['translations'] as &$value)
             $value['slug'] = generateHCSlug(GalleriesTranslations::getTableName() . '_' . $value['language_code'], $value['title']);
 
-        return $data;
+        return makeEmptyNullable($data);
     }
 
     /**
