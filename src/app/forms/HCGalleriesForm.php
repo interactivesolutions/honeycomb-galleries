@@ -91,7 +91,7 @@ class HCGalleriesForm implements HCForm
             [
                 "type"            => "dateTimePicker",
                 "properties"      => [
-                    "format" => "Y-M-D HH:mm:ss",
+                    "format" => "YYYY-MM-DD HH:mm:ss",
                 ],
                 "fieldID"         => $this->prefix . "publish_at",
                 "tabID"           => trans("General"),
@@ -100,7 +100,7 @@ class HCGalleriesForm implements HCForm
             ], [
                 "type"       => "dateTimePicker",
                 "properties" => [
-                    "format" => "Y-M-D HH:mm:ss",
+                    "format" => "YYYY-MM-DD HH:mm:ss",
                 ],
                 "fieldID"    => $this->prefix . "expires_at",
                 "tabID"      => trans("General"),
