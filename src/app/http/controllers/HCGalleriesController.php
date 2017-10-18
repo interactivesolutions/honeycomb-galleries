@@ -1,7 +1,7 @@
 <?php namespace interactivesolutions\honeycombgalleries\app\http\controllers;
 
 use Illuminate\Database\Eloquent\Builder;
-use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
+use InteractiveSolutions\HoneycombCore\Http\Controllers\HCBaseController;
 use interactivesolutions\honeycombgalleries\app\models\Galleries;
 use interactivesolutions\honeycombgalleries\app\models\GalleriesTranslations;
 use interactivesolutions\honeycombgalleries\app\validators\HCGalleriesValidator;
@@ -20,24 +20,26 @@ class HCGalleriesController extends HCBaseController
     public function adminIndex()
     {
         $config = [
-            'title'       => trans('HCGalleries::galleries.page_title'),
-            'listURL'     => route('admin.api.galleries'),
-            'newFormUrl'  => route('admin.api.form-manager', ['galleries-new']),
+            'title' => trans('HCGalleries::galleries.page_title'),
+            'listURL' => route('admin.api.galleries'),
+            'newFormUrl' => route('admin.api.form-manager', ['galleries-new']),
             'editFormUrl' => route('admin.api.form-manager', ['galleries-edit']),
-            'imagesUrl'   => route('resource.get', ['/']),
-            'headers'     => $this->getAdminListHeader(),
+            'imagesUrl' => route('resource.get', ['/']),
+            'headers' => $this->getAdminListHeader(),
         ];
 
-        if (auth()->user()->can('interactivesolutions_honeycomb_galleries_galleries_create'))
+        if (auth()->user()->can('interactivesolutions_honeycomb_galleries_galleries_create')) {
             $config['actions'][] = 'new';
+        }
 
         if (auth()->user()->can('interactivesolutions_honeycomb_galleries_galleries_update')) {
             $config['actions'][] = 'update';
             $config['actions'][] = 'restore';
         }
 
-        if (auth()->user()->can('interactivesolutions_honeycomb_galleries_galleries_delete'))
+        if (auth()->user()->can('interactivesolutions_honeycomb_galleries_galleries_delete')) {
             $config['actions'][] = 'delete';
+        }
 
         $config['actions'][] = 'search';
         $config['filters'] = $this->getFilters();
@@ -53,28 +55,28 @@ class HCGalleriesController extends HCBaseController
     public function getAdminListHeader()
     {
         return [
-            'translations.{lang}.title'    => [
-                "type"  => "text",
+            'translations.{lang}.title' => [
+                "type" => "text",
                 "label" => trans('HCGalleries::galleries.title'),
             ],
-            'translations.{lang}.content'  => [
-                "type"  => "text",
+            'translations.{lang}.content' => [
+                "type" => "text",
                 "label" => trans('HCGalleries::galleries.content'),
             ],
-            'translations.{lang}.slug'     => [
-                "type"  => "text",
+            'translations.{lang}.slug' => [
+                "type" => "text",
                 "label" => trans('HCGalleries::galleries.slug'),
             ],
             'translations.{lang}.location' => [
-                "type"  => "text",
+                "type" => "text",
                 "label" => trans('HCGalleries::galleries.location'),
             ],
-            'publish_at'                   => [
-                "type"  => "text",
+            'publish_at' => [
+                "type" => "text",
                 "label" => trans('HCGalleries::galleries.publish_at'),
             ],
-            'expires_at'                   => [
-                "type"  => "text",
+            'expires_at' => [
+                "type" => "text",
                 "label" => trans('HCGalleries::galleries.expires_at'),
             ],
         ];
@@ -88,8 +90,9 @@ class HCGalleriesController extends HCBaseController
      */
     protected function __apiStore(array $data = null)
     {
-        if (is_null($data))
+        if (is_null($data)) {
             $data = $this->getInputData();
+        }
 
         $record = Galleries::create(array_get($data, 'record'));
         $record->updateTranslations(array_get($data, 'translations'));
@@ -180,12 +183,13 @@ class HCGalleriesController extends HCBaseController
     {
         $with = ['translations'];
 
-        if ($select == null)
+        if ($select == null) {
             $select = Galleries::getFillableFields();
+        }
 
         $list = Galleries::with($with)->select($select)
             // add filters
-            ->where(function ($query) use ($select) {
+            ->where(function($query) use ($select) {
                 $query = $this->getRequestParameters($query, $select);
             });
 
@@ -209,10 +213,10 @@ class HCGalleriesController extends HCBaseController
      */
     protected function searchQuery(Builder $query, string $phrase)
     {
-        return $query->where (function (Builder $query) use ($phrase) {
-                $query->where('publish_at', 'LIKE', '%' . $phrase . '%')
-                    ->orWhere('expires_at', 'LIKE', '%' . $phrase . '%');
-            });
+        return $query->where(function(Builder $query) use ($phrase) {
+            $query->where('publish_at', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('expires_at', 'LIKE', '%' . $phrase . '%');
+        });
     }
 
     /**
@@ -233,8 +237,10 @@ class HCGalleriesController extends HCBaseController
         array_set($data, 'translations', array_get($_data, 'translations'));
         array_set($data, 'images', array_get($_data, 'images', []));
 
-        foreach ($data['translations'] as &$value)
-            $value['slug'] = generateHCSlug(GalleriesTranslations::getTableName() . '_' . $value['language_code'], $value['title']);
+        foreach ($data['translations'] as &$value) {
+            $value['slug'] = generateHCSlug(GalleriesTranslations::getTableName() . '_' . $value['language_code'],
+                $value['title']);
+        }
 
         return makeEmptyNullable($data);
     }

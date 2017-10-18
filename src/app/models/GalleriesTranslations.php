@@ -2,7 +2,8 @@
 
 namespace interactivesolutions\honeycombgalleries\app\models;
 
-use interactivesolutions\honeycombcore\models\HCUuidModel;
+
+use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
 
 class GalleriesTranslations extends HCUuidModel
 {

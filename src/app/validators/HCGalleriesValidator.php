@@ -1,6 +1,7 @@
 <?php namespace interactivesolutions\honeycombgalleries\app\validators;
 
-use interactivesolutions\honeycombcore\http\controllers\HCCoreFormValidator;
+
+use InteractiveSolutions\HoneycombCore\Http\Controllers\HCCoreFormValidator;
 
 class HCGalleriesValidator extends HCCoreFormValidator
 {

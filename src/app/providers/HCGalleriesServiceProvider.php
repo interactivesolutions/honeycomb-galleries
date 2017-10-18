@@ -2,7 +2,8 @@
 
 namespace interactivesolutions\honeycombgalleries\app\providers;
 
-use interactivesolutions\honeycombcore\providers\HCBaseServiceProvider;
+
+use InteractiveSolutions\HoneycombCore\Providers\HCBaseServiceProvider;
 
 class HCGalleriesServiceProvider extends HCBaseServiceProvider
 {

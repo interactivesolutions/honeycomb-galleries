@@ -2,7 +2,8 @@
 
 namespace interactivesolutions\honeycombgalleries\app\forms;
 
-use interactivesolutions\honeycombcore\http\controllers\interfaces\HCForm;
+
+use InteractiveSolutions\HoneycombCore\Http\Controllers\Interfaces\HCForm;
 
 class HCGalleriesForm implements HCForm
 {
@@ -35,21 +36,23 @@ class HCGalleriesForm implements HCForm
 
         $form = [
             'storageURL' => route('admin.api.galleries'),
-            'buttons'    => [
+            'buttons' => [
                 [
                     "class" => "col-centered",
                     "label" => trans('HCTranslations::core.buttons.submit'),
-                    "type"  => "submit",
+                    "type" => "submit",
                 ],
             ],
-            'structure'  => $this->getNewStructure(),
+            'structure' => $this->getNewStructure(),
         ];
 
-        if ($this->multiLanguage)
+        if ($this->multiLanguage) {
             $form['availableLanguages'] = getHCContentLanguages();
+        }
 
-        if (!$edit)
+        if (!$edit) {
             return $form;
+        }
 
         //Make changes to edit form if needed
         $form['structure'] = array_merge($form['structure'], $this->getEditStructure(true));
@@ -66,55 +69,56 @@ class HCGalleriesForm implements HCForm
     {
         return [
             [
-                "type"            => "singleLine",
-                "fieldID"         => $this->prefix . "title",
-                "tabID"           => trans("Translations"),
-                "label"           => trans("HCGalleries::galleries.title"),
-                "required"        => 1,
+                "type" => "singleLine",
+                "fieldID" => $this->prefix . "title",
+                "tabID" => trans("Translations"),
+                "label" => trans("HCGalleries::galleries.title"),
+                "required" => 1,
                 "requiredVisible" => 1,
-                "multiLanguage"   => 1,
-            ],
-            [
-                "type"          => "richTextArea",
-                "fieldID"       => $this->prefix . "content",
-                "tabID"         => trans("Translations"),
-                "label"         => trans("HCGalleries::galleries.content"),
                 "multiLanguage" => 1,
             ],
             [
-                "type"          => "singleLine",
-                "fieldID"       => $this->prefix . "location",
-                "tabID"         => trans("General"),
-                "label"         => trans("HCGalleries::galleries.location"),
+                "type" => "richTextArea",
+                "fieldID" => $this->prefix . "content",
+                "tabID" => trans("Translations"),
+                "label" => trans("HCGalleries::galleries.content"),
                 "multiLanguage" => 1,
             ],
             [
-                "type"            => "dateTimePicker",
-                "properties"      => [
-                    "format" => "YYYY-MM-DD HH:mm:ss",
-                ],
-                "fieldID"         => $this->prefix . "publish_at",
-                "tabID"           => trans("General"),
-                "label"           => trans("HCGalleries::galleries.publish_at"),
-                "requiredVisible" => 1,
-            ], [
-                "type"       => "dateTimePicker",
+                "type" => "singleLine",
+                "fieldID" => $this->prefix . "location",
+                "tabID" => trans("General"),
+                "label" => trans("HCGalleries::galleries.location"),
+                "multiLanguage" => 1,
+            ],
+            [
+                "type" => "dateTimePicker",
                 "properties" => [
                     "format" => "YYYY-MM-DD HH:mm:ss",
                 ],
-                "fieldID"    => $this->prefix . "expires_at",
-                "tabID"      => trans("General"),
-                "label"      => trans("HCGalleries::galleries.expires_at"),
+                "fieldID" => $this->prefix . "publish_at",
+                "tabID" => trans("General"),
+                "label" => trans("HCGalleries::galleries.publish_at"),
+                "requiredVisible" => 1,
+            ],
+            [
+                "type" => "dateTimePicker",
+                "properties" => [
+                    "format" => "YYYY-MM-DD HH:mm:ss",
+                ],
+                "fieldID" => $this->prefix . "expires_at",
+                "tabID" => trans("General"),
+                "label" => trans("HCGalleries::galleries.expires_at"),
 
 
             ],
             [
-                "type"      => "resource",
-                "fieldID"   => $this->prefix . "images",
-                "tabID"     => trans("Resources"),
+                "type" => "resource",
+                "fieldID" => $this->prefix . "images",
+                "tabID" => trans("Resources"),
                 "uploadURL" => route("admin.api.resources"),
-                "viewURL"   => route("resource.get", ['/']),
-                "sortable"  => 1,
+                "viewURL" => route("resource.get", ['/']),
+                "sortable" => 1,
             ],
         ];
     }
@@ -123,18 +127,19 @@ class HCGalleriesForm implements HCForm
     {
         $fields = [];
         $fields[] = [
-            "type"          => "singleLine",
-            "fieldID"       => $this->prefix . "slug",
-            "tabID"         => trans("Translations"),
-            "label"         => trans("HCGalleries::galleries.slug"),
-            "readonly"      => 1,
+            "type" => "singleLine",
+            "fieldID" => $this->prefix . "slug",
+            "tabID" => trans("Translations"),
+            "label" => trans("HCGalleries::galleries.slug"),
+            "readonly" => 1,
             "multiLanguage" => 1,
         ];
 
-        if ($append)
+        if ($append) {
             return $fields;
-        else
+        } else {
             return array_merge($this->getNewStructure(), $fields);
+        }
 
     }
 

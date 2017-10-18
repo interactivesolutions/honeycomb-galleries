@@ -1,6 +1,7 @@
 <?php namespace interactivesolutions\honeycombgalleries\app\validators;
 
-use interactivesolutions\honeycombcore\http\controllers\HCCoreFormValidator;
+
+use InteractiveSolutions\HoneycombCore\Http\Controllers\HCCoreFormValidator;
 
 class HCGalleriesTranslationsValidator extends HCCoreFormValidator
 {
@@ -13,7 +14,7 @@ class HCGalleriesTranslationsValidator extends HCCoreFormValidator
     {
         return [
             'translations.*.language_code' => 'required',
-            'translations.*.title'         => 'required',
+            'translations.*.title' => 'required',
         ];
     }
 }
