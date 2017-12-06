@@ -1,4 +1,6 @@
-<?php namespace interactivesolutions\honeycombgalleries\app\http\controllers;
+<?php
+
+namespace interactivesolutions\honeycombgalleries\app\http\controllers;
 
 use Illuminate\Database\Eloquent\Builder;
 use InteractiveSolutions\HoneycombCore\Http\Controllers\HCBaseController;
@@ -211,7 +213,7 @@ class HCGalleriesController extends HCBaseController
      * @param string $phrase
      * @return Builder
      */
-    protected function searchQuery(Builder $query, string $phrase)
+    protected function searchQuery(Builder $query, string $phrase): Builder
     {
         return $query->where(function(Builder $query) use ($phrase) {
             $query->where('publish_at', 'LIKE', '%' . $phrase . '%')
