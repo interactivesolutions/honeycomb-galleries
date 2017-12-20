@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use interactivesolutions\honeycombgalleries\app\models\GalleriesTranslations;
 use interactivesolutions\honeycomblanguages\app\models\HCLanguages;
 
+/**
+ * Class RenewForeignLanguageCodeIdHcGalleriesTranslationsTable
+ */
 class RenewForeignLanguageCodeIdHcGalleriesTranslationsTable extends Migration
 {
 
@@ -13,16 +17,16 @@ class RenewForeignLanguageCodeIdHcGalleriesTranslationsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::table('hc_galleries_translations', function(Blueprint $table) {
-            $list = GalleriesTranslations::get();
+        $list = GalleriesTranslations::get();
 
-            foreach ($list as $key => $value) {
-                GalleriesTranslations::where('id',
-                    $value->id)->update(['language_code' => HCLanguages::find($value->language_code)->iso_639_1]);
-            }
-        });
+        foreach ($list as $key => $value) {
+            GalleriesTranslations::where('id', $value->id)
+                ->update([
+                    'language_code' => HCLanguages::find($value->language_code)->iso_639_1,
+                ]);
+        }
     }
 
 
@@ -31,16 +35,15 @@ class RenewForeignLanguageCodeIdHcGalleriesTranslationsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::table('hc_galleries_translations', function(Blueprint $table) {
-            $list = GalleriesTranslations::get();
+        $list = GalleriesTranslations::get();
 
-            foreach ($list as $key => $value) {
-                GalleriesTranslations::where('id', $value->id)->update([
+        foreach ($list as $key => $value) {
+            GalleriesTranslations::where('id', $value->id)
+                ->update([
                     'language_code' => HCLanguages::where('iso_639_1', $value->language_code)->first()->id,
                 ]);
-            }
-        });
+        }
     }
 }
