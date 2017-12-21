@@ -24,7 +24,7 @@ class CreateHcGalleriesTable extends Migration
             $table->string('id', 36)->unique();
             $table->timestamps();
             $table->softDeletes();
-            $table->timestamp('publish_at')->current();
+            $table->timestamp('publish_at')->useCurrent();
             $table->dateTime('expires_at')->nullable();
         });
     }
